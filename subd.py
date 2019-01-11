@@ -2,9 +2,9 @@ import os, hashlib, sys, urllib.request
 
 movie_extensions = ["avi", "mp4", "mkv", "wmv", "mov", "flv"]
 
-# movie_folder = sys.argv[1]
-path = 'E:\\Downloads\\Movies\\Your Name (2016) [BluRay] [1080p] [YTS.AM]'
-movie_folder = path
+movie_folder = sys.argv[1]
+# path = 'E:\\Downloads\\Movies\\The Stepfather (2009) 1080p BrRip x264 - VPPV'
+# movie_folder = path
 
 def get_hash(name):
     #this hash function receives the name of the file and returns the hash code
@@ -24,19 +24,20 @@ def main():
         # print ("Opening {0} ...".format(file))
         hash_key = get_hash(exis_files)
         exists = check_srt(exis_files)
+        success = 0
 
         if exists:
             print("Subtitles already exist for the file.")
         else:
             subtitle, status = getSubtitle(hash_key)
 
-        if (status == False):
-            print("No subtitle found for the file {}".format(file))
-        else:
-            createSRT(subtitle, exis_files)
-            success+=1
+            if (status == False):
+                print("No subtitle found for the file {}".format(exis_files))
+            else:
+                createSRT(subtitle, exis_files)
+                success+=1
 
-        print("Subtitle was successfully downloaded for {} files".format(success))
+                print("Subtitle was successfully downloaded for {} files".format(success))
 
 def getFiles(path):
 
